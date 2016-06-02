@@ -51,9 +51,9 @@ import java.util.Map;
  * A wrapper for an {@link Object} or {@link Class} upon which reflective calls
  * can be made.
  * <p>
- * An example of using <code>SuperReflect</code> is <code><pre>
+ * An example of using <code>Reflect</code> is <code><pre>
  * // Static import all reflection methods to decrease verbosity
- * import static de.jodamob.reflect.SuperReflect.*;
+ * import static org.joor.Reflect.*;
  *
  * // Wrap an Object / Class / class name with the on() method:
  * on("java.lang.String")
@@ -103,8 +103,7 @@ public class SuperReflect {
         return on(forName(name, classLoader));
     }
 
-    /**
-     * Wrap a class.
+    /**     * Wrap a class.
      * <p>
      * Use this when you want to access static fields and methods on a
      * {@link Class} object, or as a basis for constructing objects of that
@@ -148,7 +147,7 @@ public class SuperReflect {
             Member member = (Member) accessible;
 
             if (Modifier.isPublic(member.getModifiers()) &&
-                Modifier.isPublic(member.getDeclaringClass().getModifiers())) {
+                    Modifier.isPublic(member.getDeclaringClass().getModifiers())) {
 
                 return accessible;
             }
@@ -221,13 +220,34 @@ public class SuperReflect {
      */
     public SuperReflect set(String name, Object value) throws SuperReflectException {
         try {
-            Field field = field0(name);
-            field.set(object, unwrap(value));
+            set(field0(name), value);
             return this;
         }
         catch (Exception e) {
             throw new SuperReflectException(e);
         }
+    }
+
+    public void setIfNull(String name, Object value) {
+        try {
+            Field field = field0(name);
+            if (field.get(object) == null) {
+                set(field, value);
+            }
+        } catch (Exception e) {
+            throw new SuperReflectException(e);
+        }
+    }
+
+    private void set(Field field, Object value) throws NoSuchFieldException, IllegalAccessException {
+        removeFinals(field);
+        field.set(object, unwrap(value));
+    }
+
+    private void removeFinals(Field field) throws NoSuchFieldException, IllegalAccessException {
+        Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
     }
 
     /**
@@ -277,7 +297,7 @@ public class SuperReflect {
 
         // Try getting a public field
         try {
-            return accessible(type.getField(name));
+            return type.getField(name);
         }
 
         // Try again, getting a non-public field
@@ -565,7 +585,7 @@ public class SuperReflect {
                     return on(object).call(name, args).get();
                 }
 
-                // [#14] Emulate POJO behaviour on wrapped map objects
+                // [#14] Simulate POJO behaviour on wrapped map objects
                 catch (SuperReflectException e) {
                     if (isMap) {
                         Map<String, Object> map = (Map<String, Object>) object;
@@ -744,6 +764,7 @@ public class SuperReflect {
         }
     }
 
+
     private static Class<?> forName(String name, ClassLoader classLoader) throws SuperReflectException {
         try {
             return Class.forName(name, true, classLoader);
@@ -752,7 +773,6 @@ public class SuperReflect {
             throw new SuperReflectException(e);
         }
     }
-
     /**
      * Get the type of the wrapped object.
      *
