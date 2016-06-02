@@ -1,5 +1,7 @@
-### Overview
+[![Build Status](https://travis-ci.org/dpreussler/SuperReflect.svg?branch=master)](https://travis-ci.org/dpreussler/SuperReflect)
 
+### Overview
+	
 jOOR stands for Java Object Oriented Reflection. It is a simple wrapper for the java.lang.reflect package.
 
 
