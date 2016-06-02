@@ -33,18 +33,15 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.joor.test;
+package de.jodamob.reflect;
 
-@SuppressWarnings("all")
-public class PrivateConstructors {
+public interface Test6 {
+    void setFoo(String s);
+    void setBar(boolean b);
+    void setBaz(String baz);
+    void testIgnore();
 
-    public final String string;
-
-    private PrivateConstructors() {
-        this(null);
-    }
-
-    private PrivateConstructors(String string) {
-        this.string = string;
-    }
+    String getFoo();
+    boolean isBar();
+    String getBaz();
 }

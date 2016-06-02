@@ -33,7 +33,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.joor;
+package de.jodamob.reflect;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
@@ -51,9 +51,9 @@ import java.util.Map;
  * A wrapper for an {@link Object} or {@link Class} upon which reflective calls
  * can be made.
  * <p>
- * An example of using <code>Reflect</code> is <code><pre>
+ * An example of using <code>SuperReflect</code> is <code><pre>
  * // Static import all reflection methods to decrease verbosity
- * import static org.joor.Reflect.*;
+ * import static de.jodamob.reflect.SuperReflect.*;
  *
  * // Wrap an Object / Class / class name with the on() method:
  * on("java.lang.String")
@@ -66,7 +66,7 @@ import java.util.Map;
  * @author Lukas Eder
  * @author Irek Matysiewicz
  */
-public class Reflect {
+public class SuperReflect {
 
     // ---------------------------------------------------------------------
     // Static API used as entrance points to the fluent API
@@ -79,10 +79,10 @@ public class Reflect {
      *
      * @param name A fully qualified class name
      * @return A wrapped class object, to be used for further reflection.
-     * @throws ReflectException If any reflection exception occurred.
+     * @throws SuperReflectException If any reflection exception occurred.
      * @see #on(Class)
      */
-    public static Reflect on(String name) throws ReflectException {
+    public static SuperReflect on(String name) throws SuperReflectException {
         return on(forName(name));
     }
 
@@ -96,10 +96,10 @@ public class Reflect {
      * @param classLoader The class loader in whose context the class should be
      *            loaded.
      * @return A wrapped class object, to be used for further reflection.
-     * @throws ReflectException If any reflection exception occurred.
+     * @throws SuperReflectException If any reflection exception occurred.
      * @see #on(Class)
      */
-    public static Reflect on(String name, ClassLoader classLoader) throws ReflectException {
+    public static SuperReflect on(String name, ClassLoader classLoader) throws SuperReflectException {
         return on(forName(name, classLoader));
     }
 
@@ -113,8 +113,8 @@ public class Reflect {
      * @param clazz The class to be wrapped
      * @return A wrapped class object, to be used for further reflection.
      */
-    public static Reflect on(Class<?> clazz) {
-        return new Reflect(clazz);
+    public static SuperReflect on(Class<?> clazz) {
+        return new SuperReflect(clazz);
     }
 
     /**
@@ -126,8 +126,8 @@ public class Reflect {
      * @param object The object to be wrapped
      * @return A wrapped object, to be used for further reflection.
      */
-    public static Reflect on(Object object) {
-        return new Reflect(object);
+    public static SuperReflect on(Object object) {
+        return new SuperReflect(object);
     }
 
     /**
@@ -182,12 +182,12 @@ public class Reflect {
     // Constructors
     // ---------------------------------------------------------------------
 
-    private Reflect(Class<?> type) {
+    private SuperReflect(Class<?> type) {
         this.object = type;
         this.isClass = true;
     }
 
-    private Reflect(Object object) {
+    private SuperReflect(Object object) {
         this.object = object;
         this.isClass = false;
     }
@@ -217,16 +217,16 @@ public class Reflect {
      * @param name The field name
      * @param value The new field value
      * @return The same wrapped object, to be used for further reflection.
-     * @throws ReflectException If any reflection exception occurred.
+     * @throws SuperReflectException If any reflection exception occurred.
      */
-    public Reflect set(String name, Object value) throws ReflectException {
+    public SuperReflect set(String name, Object value) throws SuperReflectException {
         try {
             Field field = field0(name);
             field.set(object, unwrap(value));
             return this;
         }
         catch (Exception e) {
-            throw new ReflectException(e);
+            throw new SuperReflectException(e);
         }
     }
 
@@ -243,10 +243,10 @@ public class Reflect {
      *
      * @param name The field name
      * @return The field value
-     * @throws ReflectException If any reflection exception occurred.
+     * @throws SuperReflectException If any reflection exception occurred.
      * @see #field(String)
      */
-    public <T> T get(String name) throws ReflectException {
+    public <T> T get(String name) throws SuperReflectException {
         return field(name).<T>get();
     }
 
@@ -260,19 +260,19 @@ public class Reflect {
      *
      * @param name The field name
      * @return The wrapped field
-     * @throws ReflectException If any reflection exception occurred.
+     * @throws SuperReflectException If any reflection exception occurred.
      */
-    public Reflect field(String name) throws ReflectException {
+    public SuperReflect field(String name) throws SuperReflectException {
         try {
             Field field = field0(name);
             return on(field.get(object));
         }
         catch (Exception e) {
-            throw new ReflectException(e);
+            throw new SuperReflectException(e);
         }
     }
 
-    private Field field0(String name) throws ReflectException {
+    private Field field0(String name) throws SuperReflectException {
         Class<?> type = type();
 
         // Try getting a public field
@@ -292,7 +292,7 @@ public class Reflect {
             }
             while (type != null);
 
-            throw new ReflectException(e);
+            throw new SuperReflectException(e);
         }
     }
 
@@ -311,8 +311,8 @@ public class Reflect {
      *
      * @return A map containing field names and wrapped values.
      */
-    public Map<String, Reflect> fields() {
-        Map<String, Reflect> result = new LinkedHashMap<String, Reflect>();
+    public Map<String, SuperReflect> fields() {
+        Map<String, SuperReflect> result = new LinkedHashMap<String, SuperReflect>();
         Class<?> type = type();
 
         do {
@@ -342,10 +342,10 @@ public class Reflect {
      * @return The wrapped method result or the same wrapped object if the
      *         method returns <code>void</code>, to be used for further
      *         reflection.
-     * @throws ReflectException If any reflection exception occurred.
+     * @throws SuperReflectException If any reflection exception occurred.
      * @see #call(String, Object...)
      */
-    public Reflect call(String name) throws ReflectException {
+    public SuperReflect call(String name) throws SuperReflectException {
         return call(name, new Object[0]);
     }
 
@@ -384,9 +384,9 @@ public class Reflect {
      * @return The wrapped method result or the same wrapped object if the
      *         method returns <code>void</code>, to be used for further
      *         reflection.
-     * @throws ReflectException If any reflection exception occurred.
+     * @throws SuperReflectException If any reflection exception occurred.
      */
-    public Reflect call(String name, Object... args) throws ReflectException {
+    public SuperReflect call(String name, Object... args) throws SuperReflectException {
         Class<?>[] types = types(args);
 
         // Try invoking the "canonical" method, i.e. the one with exact
@@ -403,7 +403,7 @@ public class Reflect {
                 Method method = similarMethod(name, types);
                 return on(method, object, args);
             } catch (NoSuchMethodException e1) {
-                throw new ReflectException(e1);
+                throw new SuperReflectException(e1);
             }
         }
     }
@@ -488,10 +488,10 @@ public class Reflect {
      * <code>create(new Object[0])</code>
      *
      * @return The wrapped new object, to be used for further reflection.
-     * @throws ReflectException If any reflection exception occurred.
+     * @throws SuperReflectException If any reflection exception occurred.
      * @see #create(Object...)
      */
-    public Reflect create() throws ReflectException {
+    public SuperReflect create() throws SuperReflectException {
         return create(new Object[0]);
     }
 
@@ -519,9 +519,9 @@ public class Reflect {
      *
      * @param args The constructor arguments
      * @return The wrapped new object, to be used for further reflection.
-     * @throws ReflectException If any reflection exception occurred.
+     * @throws SuperReflectException If any reflection exception occurred.
      */
-    public Reflect create(Object... args) throws ReflectException {
+    public SuperReflect create(Object... args) throws SuperReflectException {
         Class<?>[] types = types(args);
 
         // Try invoking the "canonical" constructor, i.e. the one with exact
@@ -540,7 +540,7 @@ public class Reflect {
                 }
             }
 
-            throw new ReflectException(e);
+            throw new SuperReflectException(e);
         }
     }
 
@@ -566,7 +566,7 @@ public class Reflect {
                 }
 
                 // [#14] Emulate POJO behaviour on wrapped map objects
-                catch (ReflectException e) {
+                catch (SuperReflectException e) {
                     if (isMap) {
                         Map<String, Object> map = (Map<String, Object>) object;
                         int length = (args == null ? 0 : args.length);
@@ -648,8 +648,8 @@ public class Reflect {
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Reflect) {
-            return object.equals(((Reflect) obj).get());
+        if (obj instanceof SuperReflect) {
+            return object.equals(((SuperReflect) obj).get());
         }
 
         return false;
@@ -670,19 +670,19 @@ public class Reflect {
     /**
      * Wrap an object created from a constructor
      */
-    private static Reflect on(Constructor<?> constructor, Object... args) throws ReflectException {
+    private static SuperReflect on(Constructor<?> constructor, Object... args) throws SuperReflectException {
         try {
             return on(accessible(constructor).newInstance(args));
         }
         catch (Exception e) {
-            throw new ReflectException(e);
+            throw new SuperReflectException(e);
         }
     }
 
     /**
      * Wrap an object returned from a method
      */
-    private static Reflect on(Method method, Object object, Object... args) throws ReflectException {
+    private static SuperReflect on(Method method, Object object, Object... args) throws SuperReflectException {
         try {
             accessible(method);
 
@@ -695,7 +695,7 @@ public class Reflect {
             }
         }
         catch (Exception e) {
-            throw new ReflectException(e);
+            throw new SuperReflectException(e);
         }
     }
 
@@ -703,8 +703,8 @@ public class Reflect {
      * Unwrap an object
      */
     private static Object unwrap(Object object) {
-        if (object instanceof Reflect) {
-            return ((Reflect) object).get();
+        if (object instanceof SuperReflect) {
+            return ((SuperReflect) object).get();
         }
 
         return object;
@@ -735,21 +735,21 @@ public class Reflect {
      *
      * @see Class#forName(String)
      */
-    private static Class<?> forName(String name) throws ReflectException {
+    private static Class<?> forName(String name) throws SuperReflectException {
         try {
             return Class.forName(name);
         }
         catch (Exception e) {
-            throw new ReflectException(e);
+            throw new SuperReflectException(e);
         }
     }
 
-    private static Class<?> forName(String name, ClassLoader classLoader) throws ReflectException {
+    private static Class<?> forName(String name, ClassLoader classLoader) throws SuperReflectException {
         try {
             return Class.forName(name, true, classLoader);
         }
         catch (Exception e) {
-            throw new ReflectException(e);
+            throw new SuperReflectException(e);
         }
     }
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2009-2013, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * This software is licensed to you under the Apache License, Version 2.0
@@ -33,17 +33,18 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.joor.test;
+package de.jodamob.reflect;
 
-/**
- * @author Lukas Eder
- */
-public class Test1 {
-    public static int     S_INT1;
-    public static Integer S_INT2;
-    public int            I_INT1;
-    public Integer        I_INT2;
+@SuppressWarnings("all")
+public class PrivateConstructors {
 
-    public static Test1   S_DATA;
-    public Test1          I_DATA;
+    public final String string;
+
+    private PrivateConstructors() {
+        this(null);
+    }
+
+    private PrivateConstructors(String string) {
+        this.string = string;
+    }
 }

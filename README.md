@@ -17,7 +17,7 @@ None!
 
 ````java
 // All examples assume the following static import:
-import static org.joor.SuperReflect.*;
+import static de.jodamob.reflect.SuperReflect.*;
 
 String world = on("java.lang.String")  // Like Class.forName()
                 .create("Hello World") // Call most specific matching constructor
@@ -82,15 +82,11 @@ catch (Exception ignore) {
 }
 ````
 
+Gradle
+======
 
-### Similar projects
-
-Everyday Java reflection with a fluent interface:
-
- * http://docs.codehaus.org/display/FEST/Reflection+Module
- * http://projetos.vidageek.net/mirror/mirror/
-
-Reflection modelled as XPath (quite interesting!)
-
- * http://commons.apache.org/jxpath/users-guide.html
+```groovy
+compile 'de.jodamob.android:SuperReflect:1.0'
+ 
+```
 

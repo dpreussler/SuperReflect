@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2013, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2011-2013, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * This software is licensed to you under the Apache License, Version 2.0
@@ -33,15 +33,47 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.joor.test;
+package de.jodamob.reflect;
 
-public interface Test6 {
-    void setFoo(String s);
-    void setBar(boolean b);
-    void setBaz(String baz);
-    void testIgnore();
+import java.lang.reflect.InvocationTargetException;
 
-    String getFoo();
-    boolean isBar();
-    String getBaz();
+/**
+ * A unchecked wrapper for any of Java's checked reflection exceptions:
+ * <p>
+ * These exceptions are
+ * <ul>
+ * <li> {@link ClassNotFoundException}</li>
+ * <li> {@link IllegalAccessException}</li>
+ * <li> {@link IllegalArgumentException}</li>
+ * <li> {@link InstantiationException}</li>
+ * <li> {@link InvocationTargetException}</li>
+ * <li> {@link NoSuchMethodException}</li>
+ * <li> {@link NoSuchFieldException}</li>
+ * <li> {@link SecurityException}</li>
+ * </ul>
+ *
+ * @author Lukas Eder
+ */
+public class SuperReflectException extends RuntimeException {
+
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -6213149635297151442L;
+
+    public SuperReflectException(String message) {
+        super(message);
+    }
+
+    public SuperReflectException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public SuperReflectException() {
+        super();
+    }
+
+    public SuperReflectException(Throwable cause) {
+        super(cause);
+    }
 }

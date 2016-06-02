@@ -33,12 +33,12 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.joor.test;
+package de.jodamob.reflect;
 
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
-import static org.joor.Reflect.accessible;
-import static org.joor.Reflect.on;
+import static de.jodamob.reflect.SuperReflect.accessible;
+import static de.jodamob.reflect.SuperReflect.on;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -49,17 +49,13 @@ import static org.junit.Assume.assumeTrue;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.joor.Reflect;
-import org.joor.ReflectException;
-import org.joor.test.Test2.ConstructorType;
-import org.joor.test.Test3.MethodType;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Lukas Eder
  */
-public class ReflectTest {
+public class SuperReflectTest {
 
     @Test
     public void testOn() {
@@ -74,13 +70,13 @@ public class ReflectTest {
             on("asdf");
             fail();
         }
-        catch (ReflectException expected) {}
+        catch (SuperReflectException expected) {}
 
         try {
             on("asdf", ClassLoader.getSystemClassLoader());
             fail();
         }
-        catch (ReflectException expected) {}
+        catch (SuperReflectException expected) {}
     }
 
     @Test
@@ -95,7 +91,7 @@ public class ReflectTest {
             on(String.class).create(new Object());
             fail();
         }
-        catch (ReflectException expected) {}
+        catch (SuperReflectException expected) {}
     }
 
     @Test
@@ -104,33 +100,6 @@ public class ReflectTest {
         assertEquals("abc", on(PrivateConstructors.class).create("abc").get("string"));
     }
 
-    @Test
-    public void testConstructorsWithAmbiguity() {
-        // [#5] Re-enact when this is implemented
-        assumeTrue(false);
-
-        Test2 test;
-
-        test = on(Test2.class).create().get();
-        assertEquals(null, test.n);
-        assertEquals(ConstructorType.NO_ARGS, test.constructorType);
-
-        test = on(Test2.class).create("abc").get();
-        assertEquals("abc", test.n);
-        assertEquals(ConstructorType.OBJECT, test.constructorType);
-
-        test = on(Test2.class).create(new Long("1")).get();
-        assertEquals(1L, test.n);
-        assertEquals(ConstructorType.NUMBER, test.constructorType);
-
-        test = on(Test2.class).create(1).get();
-        assertEquals(1, test.n);
-        assertEquals(ConstructorType.INTEGER, test.constructorType);
-
-        test = on(Test2.class).create('a').get();
-        assertEquals('a', test.n);
-        assertEquals(ConstructorType.OBJECT, test.constructorType);
-    }
 
     @Test
     public void testMethods() {
@@ -213,33 +182,6 @@ public class ReflectTest {
         assertEquals(TestHierarchicalMethodsBase.PRIVATE_RESULT, on(baseClass).call("priv_method", 1).get());
     }
 
-    @Test
-    public void testMethodsWithAmbiguity() {
-        // [#5] Re-enact when this is implemented
-        assumeTrue(false);
-
-        Test3 test;
-
-        test = on(Test3.class).create().call("method").get();
-        assertEquals(null, test.n);
-        assertEquals(MethodType.NO_ARGS, test.methodType);
-
-        test = on(Test3.class).create().call("method", "abc").get();
-        assertEquals("abc", test.n);
-        assertEquals(MethodType.OBJECT, test.methodType);
-
-        test = on(Test3.class).create().call("method", new Long("1")).get();
-        assertEquals(1L, test.n);
-        assertEquals(MethodType.NUMBER, test.methodType);
-
-        test = on(Test3.class).create().call("method", 1).get();
-        assertEquals(1, test.n);
-        assertEquals(MethodType.INTEGER, test.methodType);
-
-        test = on(Test3.class).create().call("method", 'a').get();
-        assertEquals('a', test.n);
-        assertEquals(MethodType.OBJECT, test.methodType);
-    }
 
     @Test
     public void testFields() throws Exception {
@@ -401,7 +343,7 @@ public class ReflectTest {
             on(map).as(Test6.class).testIgnore();
             fail();
         }
-        catch (ReflectException expected) {}
+        catch (SuperReflectException expected) {}
     }
 
     @Test
@@ -454,7 +396,7 @@ public class ReflectTest {
     @Test
     public void testHashCode() {
         Object object = new Object();
-        assertEquals(Reflect.on(object).hashCode(), object.hashCode());
+        assertEquals(SuperReflect.on(object).hashCode(), object.hashCode());
     }
 
     @Test
@@ -465,15 +407,15 @@ public class ReflectTest {
                 return "test";
             }
         };
-        assertEquals(Reflect.on(object).toString(), object.toString());
+        assertEquals(SuperReflect.on(object).toString(), object.toString());
     }
 
     @Test
     public void testEquals() {
         Object object = new Object();
-        Reflect a = Reflect.on(object);
-        Reflect b = Reflect.on(object);
-        Reflect c = Reflect.on(object);
+        SuperReflect a = SuperReflect.on(object);
+        SuperReflect b = SuperReflect.on(object);
+        SuperReflect c = SuperReflect.on(object);
 
         assertTrue(b.equals(a));
         assertTrue(a.equals(b));

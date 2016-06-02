@@ -33,30 +33,16 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.joor.test;
+package de.jodamob.reflect;
 
 /**
  * @author Lukas Eder
  */
-public class Test10 {
+public interface Test5 {
 
-    public final String  s;
-    public final Integer i;
+    String substring(int beginIndex);
+    String substring(int beginIndex, int endIndex);
 
-    Test10(int i) {
-        this(null, i);
-    }
-
-    Test10(String s) {
-        this(s, null);
-    }
-
-    Test10(String s, int i) {
-        this(s, (Integer) i);
-    }
-
-    Test10(String s, Integer i) {
-        this.s = s;
-        this.i = i;
-    }
+    String substring(Integer beginIndex);
+    String substring(Integer beginIndex, Integer endIndex);
 }

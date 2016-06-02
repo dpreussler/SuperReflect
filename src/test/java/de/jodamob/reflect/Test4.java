@@ -33,13 +33,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.joor.test;
+package de.jodamob.reflect;
 
-public class Test8 {
+public class Test4 {
 
-    private static void s_method() {
+    public static void s_method() {
     }
 
-    private void i_method() {
+    public void i_method() {
     }
 }

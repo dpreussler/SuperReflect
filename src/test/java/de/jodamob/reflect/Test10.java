@@ -33,47 +33,30 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.joor;
-
-import java.lang.reflect.InvocationTargetException;
+package de.jodamob.reflect;
 
 /**
- * A unchecked wrapper for any of Java's checked reflection exceptions:
- * <p>
- * These exceptions are
- * <ul>
- * <li> {@link ClassNotFoundException}</li>
- * <li> {@link IllegalAccessException}</li>
- * <li> {@link IllegalArgumentException}</li>
- * <li> {@link InstantiationException}</li>
- * <li> {@link InvocationTargetException}</li>
- * <li> {@link NoSuchMethodException}</li>
- * <li> {@link NoSuchFieldException}</li>
- * <li> {@link SecurityException}</li>
- * </ul>
- *
  * @author Lukas Eder
  */
-public class ReflectException extends RuntimeException {
+public class Test10 {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6213149635297151442L;
+    public final String  s;
+    public final Integer i;
 
-    public ReflectException(String message) {
-        super(message);
+    Test10(int i) {
+        this(null, i);
     }
 
-    public ReflectException(String message, Throwable cause) {
-        super(message, cause);
+    Test10(String s) {
+        this(s, null);
     }
 
-    public ReflectException() {
-        super();
+    Test10(String s, int i) {
+        this(s, (Integer) i);
     }
 
-    public ReflectException(Throwable cause) {
-        super(cause);
+    Test10(String s, Integer i) {
+        this.s = s;
+        this.i = i;
     }
 }

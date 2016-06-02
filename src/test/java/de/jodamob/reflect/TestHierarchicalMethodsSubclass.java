@@ -33,40 +33,25 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.joor.test;
+package de.jodamob.reflect;
 
-/**
- * @author Lukas Eder
- */
-public class Test3 {
+public class TestHierarchicalMethodsSubclass extends TestHierarchicalMethodsBase {
 
-    public Object     n;
-    public MethodType methodType;
+    public static String PUBLIC_RESULT = "PUBLIC_SUB";
+    public static String PRIVATE_RESULT = "PRIVATE_SUB";
 
-    public void method() {
-        this.n = null;
-        this.methodType = MethodType.NO_ARGS;
+    // Both of these are hiding fields in the super type
+    private int invisibleField2;
+    public int visibleField2;
+
+    private int invisibleField3;
+    public int visibleField3;
+
+    private String priv_method(int number) {
+        return PRIVATE_RESULT;
     }
 
-    public void method(Integer n1) {
-        this.n = n1;
-        this.methodType = MethodType.INTEGER;
-    }
-
-    public void method(Number n1) {
-        this.n = n1;
-        this.methodType = MethodType.NUMBER;
-    }
-
-    public void method(Object n1) {
-        this.n = n1;
-        this.methodType = MethodType.OBJECT;
-    }
-
-    public static enum MethodType {
-        NO_ARGS,
-        INTEGER,
-        NUMBER,
-        OBJECT
+    private String pub_method(Integer number) {
+        return PRIVATE_RESULT;
     }
 }

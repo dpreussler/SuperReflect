@@ -33,40 +33,17 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.joor.test;
+package de.jodamob.reflect;
 
 /**
  * @author Lukas Eder
  */
-public class Test2 {
+public class Test1 {
+    public static int     S_INT1;
+    public static Integer S_INT2;
+    public int            I_INT1;
+    public Integer        I_INT2;
 
-    public final Object          n;
-    public final ConstructorType constructorType;
-
-    public Test2() {
-        this.n = null;
-        this.constructorType = ConstructorType.NO_ARGS;
-    }
-
-    public Test2(Integer n) {
-        this.n = n;
-        this.constructorType = ConstructorType.INTEGER;
-    }
-
-    public Test2(Number n) {
-        this.n = n;
-        this.constructorType = ConstructorType.NUMBER;
-    }
-
-    public Test2(Object n) {
-        this.n = n;
-        this.constructorType = ConstructorType.OBJECT;
-    }
-
-    public static enum ConstructorType {
-        NO_ARGS,
-        INTEGER,
-        NUMBER,
-        OBJECT
-    }
+    public static Test1   S_DATA;
+    public Test1          I_DATA;
 }

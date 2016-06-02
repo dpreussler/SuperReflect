@@ -33,16 +33,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.joor.test;
+package de.jodamob.reflect;
 
-/**
- * @author Lukas Eder
- */
-public interface Test5 {
+public class Test8 {
 
-    String substring(int beginIndex);
-    String substring(int beginIndex, int endIndex);
+    private static void s_method() {
+    }
 
-    String substring(Integer beginIndex);
-    String substring(Integer beginIndex, Integer endIndex);
+    private void i_method() {
+    }
 }
