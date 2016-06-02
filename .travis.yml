@@ -1,7 +1,6 @@
 language: java
-jdk:
-  - oraclejdk7
-  - openjdk7
-  - openjdk6
-install: sh -c 'cd jOOR && mvn install -DskipTests=true'
-script: sh -c 'cd jOOR && mvn test'
+
+install:
+    - true
+
+script: TERM=dumb ./gradlew test
