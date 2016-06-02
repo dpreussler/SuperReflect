@@ -2,8 +2,11 @@
 
 jOOR stands for Java Object Oriented Reflection. It is a simple wrapper for the java.lang.reflect package.
 
-jOOR's name is inspired by jOOQ, a fluent API for SQL building and execution.
 
+Copyright (c) 2011-2013, Lukas Eder, lukas.eder@gmail.com
+
+Modified 2015-2016, Danny Preussler
+to allow final fields to be set as well for testing purposes
 
 ### Dependencies
 
@@ -14,7 +17,7 @@ None!
 
 ````java
 // All examples assume the following static import:
-import static org.joor.Reflect.*;
+import static org.joor.SuperReflect.*;
 
 String world = on("java.lang.String")  // Like Class.forName()
                 .create("Hello World") // Call most specific matching constructor
