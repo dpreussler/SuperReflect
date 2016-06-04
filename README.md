@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/dpreussler/SuperReflect.svg?branch=master)](https://travis-ci.org/dpreussler/SuperReflect)
+[![Build Status](https://travis-ci.org/dpreussler/SuperReflect?branch=master)](https://travis-ci.org/dpreussler/SuperReflect)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.jodamob.android/SuperReflect/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.jodamob.android/SuperReflect)
 
 ### Overview
 	
