@@ -3,7 +3,7 @@
 
 ### Overview
 	
-jOOR stands for Java Object Oriented Reflection. It is a simple wrapper for the java.lang.reflect package.
+Java Object Oriented Reflection. It is a simple wrapper for the java.lang.reflect package.
 
 
 Copyright (c) 2011-2013, Lukas Eder, lukas.eder@gmail.com
@@ -32,7 +32,7 @@ String world = on("java.lang.String")  // Like Class.forName()
 
 ### Proxy abstraction
 
-jOOR also gives access to the java.lang.reflect.Proxy API in a simple way:
+SuperReflect also gives access to the java.lang.reflect.Proxy API in a simple way:
 
 ````java
 public interface StringProxy {
@@ -48,7 +48,7 @@ String substring = on("java.lang.String")
 
 ### Comparison with standard java.lang.reflect
 
-jOOR code:
+SuperReflect code:
 
 ````java
 Employee[] employees = on(department).call("getEmployees").get();
