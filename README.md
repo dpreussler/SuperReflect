@@ -4,6 +4,7 @@
 ### Overview
 	
 Java Object Oriented Reflection. It is a simple wrapper for the java.lang.reflect package.
+Works on Android too
 
 
 Copyright (c) 2011-2013, Lukas Eder, lukas.eder@gmail.com
@@ -16,10 +17,26 @@ to allow final fields to be set as well for testing purposes
 None!
 
 
+### Gradle
+
+```groovy
+compile 'de.jodamob.android:SuperReflect:1.0.1'
+ 
+```
+
+
 ### Simple example
 
 ````java
-// All examples assume the following static import:
+SuperReflect.on(new MyObject).set("nonVisibleVariable", true)
+````
+
+
+
+### Another example
+
+````java
+// All following examples assume the following static import:
 import static de.jodamob.reflect.SuperReflect.*;
 
 String world = on("java.lang.String")  // Like Class.forName()
@@ -84,12 +101,4 @@ catch (Exception ignore) {
   throw new RuntimeException(e);
 }
 ````
-
-Gradle
-======
-
-```groovy
-compile 'de.jodamob.android:SuperReflect:1.0'
- 
-```
 
